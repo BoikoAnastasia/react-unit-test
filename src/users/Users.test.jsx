@@ -1,8 +1,8 @@
 import axios from "axios";
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {renderWithRouter} from '../tests/helper/renderWithRouter'
+import { renderWithRouter } from "../tests/helper/renderWithRouter";
 import Users from "./Users";
 
 jest.mock("axios");
@@ -34,7 +34,7 @@ describe("test users", () => {
 
     test("корректные данные", async () => {
         axios.get.mockReturnValue(response);
-        render(renderWithRouter(<Users/>));
+        renderWithRouter(<Users />);
         const users = await screen.findAllByTestId("user-item");
         expect(users.length).toBe(3);
         expect(axios.get).toBeCalledTimes(1);
@@ -43,9 +43,7 @@ describe("test users", () => {
 
     test("redirect to user page", async () => {
         axios.get.mockReturnValue(response);
-        render(
-            renderWithRouter(null, '/users')
-        );
+        renderWithRouter(null, "/users");
         const users = await screen.findAllByTestId("user-item");
         expect(users.length).toBe(3);
         userEvent.click(users[0]);
